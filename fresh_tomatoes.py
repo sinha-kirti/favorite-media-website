@@ -6,7 +6,7 @@ import re
 main_page_head = '''
 <head>
     <meta charset="utf-8">
-    <title>Fresh Tomatoes!</title>
+    <title>Fresh Tomatoes-Favorite Media!</title>
 
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -105,13 +105,31 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+            <a class="navbar-brand" href="#">My Favorite Medias Website</a>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Favorite Movies</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       {movie_tiles}
+    </div>
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Favorite TV Series</a>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
@@ -144,7 +162,7 @@ def create_movie_tiles_content(movies):
 
 def open_movies_page(movies):
   # Create or overwrite the output file
-  output_file = open('fresh_tomatoes.html', 'w')
+  output_file = open('index.html', 'w')
 
   # Replace the placeholder for the movie tiles with the actual dynamically generated content
   rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies))
