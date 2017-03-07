@@ -8,3 +8,13 @@ class Movie():
         self.trailer_youtube_url = trailer_youtube
     def show_trailer(self):
         webbrowser.open(self.trailer_youtube_url)
+class TVSeries():
+    """ This class provides a way to store series related information""" 
+    def __init__(self, tvseries_title, tvseries_storyline, poster_image, trailer_youtube):
+        self.title = tvseries_title
+        self.storyline = tvseries_storyline
+        self.poster_image_url = poster_image
+        self.trailer_youtube_url = trailer_youtube
+    def show_trailer(self):
+        webbrowser.open(self.trailer_youtube_url)
+

@@ -1,7 +1,12 @@
+import webbrowser
+import os
+import re
 
+# Styles and scripting for the page
+main_page_head = '''
 <head>
     <meta charset="utf-8">
-    <title>Fresh Tomatoes-Favorite Media!</title>
+    <title>My Favorite Media!</title>
 
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -59,7 +64,7 @@
         // Start playing the video whenever the trailer modal is opened
         $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
-            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            var sourceUrl = 'https://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
               'id': 'trailer-video',
               'type': 'text-html',
@@ -75,7 +80,10 @@
         });
     </script>
 </head>
+'''
 
+# The main page layout and title bar
+main_page_content = '''
 <!DOCTYPE html>
 <html lang="en">
   <body>
@@ -112,17 +120,7 @@
       </div>
     </div>
     <div class="container">
-      
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="Bj4gS1JQzjk" data-toggle="modal" data-target="#trailer">
-    <img src="https://i.ytimg.com/vi/8gL2nKAa9Q8/maxresdefault.jpg" width="220" height="342">
-    <h2>Toy Story</h2>
-</div>
-
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="cRdxXPV9GNQ" data-toggle="modal" data-target="#trailer">
-    <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Avatar-Teaser-Poster.jpg" width="220" height="342">
-    <h2>Avatar</h2>
-</div>
-
+      {movie_tiles}
     </div>
     <div class="container">
       <div class="navbar navbar-inverse navbar-fixed" role="navigation">
@@ -133,5 +131,74 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      {tvserial_tiles}
+    </div>
   </body>
 </html>
+'''
+
+# A single movie entry html template
+movie_tile_content = '''
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+    <img src="{poster_image_url}" width="220" height="342">
+    <h2>{movie_title}</h2>
+    <p>{movie_storyline}</p>
+</div>
+'''
+
+tvserial_tile_content = '''
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+    <img src="{poster_image_url}" width="220" height="342">
+    <h3>{tvserial_title}</h3>
+</div>
+'''
+def create_movie_tiles_content(movies):
+    # The HTML content for this section of the page
+    content = ''
+    for movie in movies:
+        # Extract the youtube ID from the url
+        youtube_id_match = re.search(r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
+        youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
+        trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
+
+        # Append the tile for the movie with its content filled in
+        content += movie_tile_content.format(
+            movie_title=movie.title,
+            movie_storyline=movie.storyline,
+            poster_image_url=movie.poster_image_url,
+            trailer_youtube_id=trailer_youtube_id
+        )
+    return content
+
+def create_tvserial_tiles_content(tvseries):
+    # The HTML content for this section of the page
+    content1 = ''
+    for tvserial in tvseries:
+        # Extract the youtube ID from the url
+        youtube_id_match = re.search(r'(?<=v=)[^&#]+', tvserial.trailer_youtube_url)
+        youtube_id_match = youtube_id_match or re.search(r'(?<=be/)[^&#]+', tvserial.trailer_youtube_url)
+        trailer_youtube_id = youtube_id_match.group(0) if youtube_id_match else None
+
+        # Append the tile for the movie with its content filled in
+        content1 += tvserial_tile_content.format(
+            tvserial_title=tvserial.title,
+            poster_image_url=tvserial.poster_image_url,
+            trailer_youtube_id=trailer_youtube_id
+        )
+    return content1
+
+def open_movies_page(movies,tvseries):
+  # Create or overwrite the output file
+  output_file = open('index.html', 'w')
+
+  # Replace the placeholder for the movie tiles and tvserial tiles with the actual dynamically generated content
+  rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies),tvserial_tiles=create_tvserial_tiles_content(tvseries))
+
+  # Output the file
+  output_file.write(main_page_head + rendered_content)
+  output_file.close()
+
+  # open the output file in the browser
+  url = os.path.abspath(output_file.name)
+  webbrowser.open('file://' + url, new=2) # open in a new tab, if possible
