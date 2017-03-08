@@ -40,6 +40,14 @@ main_page_head = '''
             background-color: #EEE;
             cursor: pointer;
         }
+        .tvserial-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .tvserial-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
         .scale-media {
             padding-bottom: 56.25%;
             position: relative;
@@ -75,6 +83,11 @@ main_page_head = '''
         // Animate in the movies when the page loads
         $(document).ready(function () {
           $('.movie-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+         $(document).ready(function () {
+          $('.tvserial-tile').hide().first().show("fast", function showNext() {
             $(this).next("div").show("fast", showNext);
           });
         });
@@ -148,7 +161,7 @@ movie_tile_content = '''
 '''
 
 tvserial_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+<div class="col-md-6 col-lg-4 tvserial-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <img src="{poster_image_url}" width="220" height="342">
     <h3>{tvserial_title}</h3>
 </div>
@@ -193,7 +206,7 @@ def open_movies_page(movies,tvseries):
   output_file = open('index.html', 'w')
 
   # Replace the placeholder for the movie tiles and tvserial tiles with the actual dynamically generated content
-  rendered_content = main_page_content.format(movie_tiles=create_movie_tiles_content(movies),tvserial_tiles=create_tvserial_tiles_content(tvseries))
+  rendered_content = main_page_content.format(movie_tiles =create_movie_tiles_content(movies), tvserial_tiles=create_tvserial_tiles_content(tvseries))
 
   # Output the file
   output_file.write(main_page_head + rendered_content)
