@@ -19,7 +19,7 @@ beauty_and_the_beast_2017=media.Movie("Beauty and The Beast",
 
 sherlock=media.TVSeries("Sherlock",
                    "A detective mastermind who solves mysterious cases with the help of his friend",
-                   "http://www.gstatic.com/tv/thumb/tvbanners/13517391/p13517391_b_v8_aa.jpg",
+                   "https://www.gstatic.com/tv/thumb/tvbanners/13517391/p13517391_b_v8_aa.jpg",
                    "https://www.youtube.com/watch?v=cRdxXhPV9GNQ")
 movies = [toy_story,avatar, beauty_and_the_beast_2017]
 tvseries = [sherlock];
@@ -27,4 +27,4 @@ tvseries = [sherlock];
 #below function
 
 fresh_tomatoes.open_movies_page(movies,tvseries)
-# Creates a webpage have our favourite movies
+# Creates a webpage have our favourite movies and tvseries
