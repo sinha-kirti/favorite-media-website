@@ -1,5 +1,5 @@
 import media
-import fresh_tomatoes
+import web_layout
 toy_story = media.Movie("Toy Story",
                        "A story of a boy and his toys which come to life",
                        "https://i.ytimg.com/vi/8gL2nKAa9Q8/maxresdefault.jpg",
@@ -26,5 +26,5 @@ tvseries = [sherlock];
 #above line creates a list of movies to provide as argument to
 #below function
 
-fresh_tomatoes.open_movies_page(movies,tvseries)
+web_layout.open_movies_page(movies,tvseries)
 # Creates a webpage have our favourite movies and tvseries
