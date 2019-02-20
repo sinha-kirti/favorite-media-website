@@ -20,7 +20,7 @@ beauty_and_the_beast_2017=media.Movie("Beauty and The Beast",
 sherlock=media.TVSeries("Sherlock",
                    "A detective mastermind who solves mysterious cases with the help of his friend",
                    "https://www.gstatic.com/tv/thumb/tvbanners/13517391/p13517391_b_v8_aa.jpg",
-                   "https://www.youtube.com/watch?v=cRdxXhPV9GNQ")
+                   "https://www.youtube.com/watch?v=qlcWFoNqZHc")
 movies = [toy_story,avatar, beauty_and_the_beast_2017]
 tvseries = [sherlock];
 #above line creates a list of movies to provide as argument to
