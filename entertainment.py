@@ -8,7 +8,7 @@ toy_story = media.Movie("Toy Story",
 avatar=media.Movie("Avatar",
                    "A marine on an alien planet",
                    "https://upload.wikimedia.org/wikipedia/en/b/b0/Avatar-Teaser-Poster.jpg",
-                   "https://www.youtube.com/watch?v=cRdxXPV9GNQ")
+                   "https://www.youtube.com/watch?v=5PSNL1qE6VY")
 
 beauty_and_the_beast_2017=media.Movie("Beauty and The Beast",
                    "An old fairytale",
